@@ -42,17 +42,17 @@ devices = IPSW::DeviceList.new(only: "iPad")
 
 urls  = Set.new
 
-new_ipsw = []
-old_ipsw = Dir["*.ipsw"]
+new_files = []
+old_files = Dir["*.ipsw"]
 
 devices.identifiers.each do |identifier|
     firmware = IPSW::Identifier.new(identifier)
     puts "LATEST: " + firmware.latest[:name]
-    urls     << firmware.latest[:url]
-    new_ipsw << firmware.latest[:name]
+    urls      << firmware.latest[:url]
+    new_files << firmware.latest[:name]
 end
 
-(old_ipsw - new_ipsw).each do |file|
+(old_files - new_files).each do |file|
     if File.exists?(file)
         puts "Deleting #{file}..."
         File.delete(file)
