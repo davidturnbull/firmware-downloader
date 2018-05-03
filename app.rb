@@ -1,5 +1,7 @@
 require "./lib/ipsw/device_list"
 require "./lib/ipsw/identifier"
+require "set"
+require "awesome_print"
 
 # class UpdateFirmware
 
@@ -36,22 +38,27 @@ require "./lib/ipsw/identifier"
 
 IPSW_DIRECTORY = ""
 
-devices = IPSW::DeviceList.new(only: "iPhone")
+devices = IPSW::DeviceList.new(only: "iPad")
 
-firmware_urls = Set.new
+urls  = Set.new
+
+new_ipsw = []
+old_ipsw = Dir["*.ipsw"]
 
 devices.identifiers.each do |identifier|
     firmware = IPSW::Identifier.new(identifier)
-    firmware_urls << firmware.latest[:url]
-    firmware.previous.each do |firmware|
-            if File.exists?(firmware[:file_name])
-                puts "Deleting #{firmware[:file_name]}..."
-                File.delete(firmware[:file_name])
-            end
-        end
+    puts "LATEST: " + firmware.latest[:name]
+    urls     << firmware.latest[:url]
+    new_ipsw << firmware.latest[:name]
+end
+
+(old_ipsw - new_ipsw).each do |file|
+    if File.exists?(file)
+        puts "Deleting #{file}..."
+        File.delete(file)
     end
 end
 
 File.open("urls.txt", "w") do |file|
-    file.write(firmware_urls.to_a.join("\n"))
+    file.write(urls.to_a.join("\n"))
 end
