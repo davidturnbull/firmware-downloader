@@ -11,7 +11,6 @@ every 10.minutes do
                     --continue \
                     --allow-overwrite=false \
                     --always-resume=true \
-                    --conditional-get=true \
                     --input=/root/firmware-downloader/urls.txt \
                     --dir=/root/public"
 #     else
