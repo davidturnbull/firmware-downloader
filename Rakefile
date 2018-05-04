@@ -1,5 +1,4 @@
 require "set"
-
 require "./lib/ipsw/device_list"
 require "./lib/ipsw/identifier"
 
@@ -14,7 +13,7 @@ task :update do
 
     devices.identifiers.each do |identifier|
         firmware = IPSW::Identifier.new(identifier)
-        puts "LATEST: " + firmware.latest[:name]
+        puts firmware.latest[:name] unless new_files.include? firmware.latest[:name]
         urls      << firmware.latest[:url]
         new_files << firmware.latest[:name]
     end
