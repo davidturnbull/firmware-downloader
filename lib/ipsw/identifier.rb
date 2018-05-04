@@ -1,6 +1,5 @@
 require "httparty"
 require "uri"
-# require "awesome_print"
 
 module IPSW
 
@@ -12,7 +11,6 @@ module IPSW
 
     def initialize(identifier)
       @identifier = normalize(identifier)
-    #   @response   = HTTParty.get(endpoint) if valid?
       @request = HTTParty.get(endpoint)
     end
 
@@ -23,11 +21,6 @@ module IPSW
     def endpoint
       "https://api.ipsw.me/v4/device/#{identifier}?type=ipsw"
     end
-
-    # def json
-    #     ap response
-    #     JSON.parse(response)
-    # end
 
     def list
       response["firmwares"].map do |item|
@@ -59,13 +52,13 @@ module IPSW
 
     private
 
-    def response
-        if request.code === 200
-            JSON.parse(request.body)
-        else
-            raise "Request to #{ENDPOINT} returned a response code of #{request.code}"
-        end
-    end
+      def response
+          if request.code === 200
+              JSON.parse(request.body)
+          else
+              raise "Request to #{ENDPOINT} returned a response code of #{request.code}"
+          end
+      end
 
       def normalize(string)
         string
