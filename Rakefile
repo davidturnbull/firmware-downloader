@@ -9,13 +9,13 @@ task :update do
     urls  = Set.new
 
     new_files = []
-    old_files = Dir["*.ipsw"]
+    old_files = Dir["/mnt/volume-sfo2-01/*.ipsw"]
 
     devices.identifiers.each do |identifier|
         firmware = IPSW::Identifier.new(identifier)
         puts firmware.latest[:name] unless new_files.include? firmware.latest[:name]
         urls      << firmware.latest[:url]
-        new_files << firmware.latest[:name]
+        new_files << "/mnt/volume-sfo2-01/" + firmware.latest[:name]
     end
 
     (old_files - new_files).each do |file|
