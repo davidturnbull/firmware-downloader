@@ -1,9 +1,7 @@
 # require "ptools"
 
 every 5.minutes do
-    # Update urls in text file
-    # firmware = UpdateFirmware.new
-    # firmware.update!
+    rake "update"
 end
 
 # Download files from text file
