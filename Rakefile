@@ -2,6 +2,8 @@ require "set"
 require "./lib/ipsw/device_list"
 require "./lib/ipsw/identifier"
 
+# TODO: Set the default task to "update" task
+
 task :update do
 
     devices = IPSW::DeviceList.new(only: "iPhone, iPad")
