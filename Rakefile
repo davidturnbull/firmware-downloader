@@ -4,7 +4,7 @@ require "./lib/ipsw/identifier"
 
 task :update do
 
-    devices = IPSW::DeviceList.new(only: "iPhone", "iPad")
+    devices = IPSW::DeviceList.new(only: "iPhone, iPad")
 
     urls  = Set.new
 
