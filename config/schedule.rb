@@ -12,7 +12,7 @@ every 10.minutes do
                     --allow-overwrite=false \
                     --always-resume=true \
                     --input=/root/firmware-downloader/urls.txt \
-                    --dir=/root/public"
+                    --dir=/mnt/volume-sfo2-01"
 #     else
 #         raise "aria2 is required to download files. Download here: https://aria2.github.io"
 #     end
