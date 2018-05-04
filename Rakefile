@@ -30,5 +30,9 @@ task :update do
     File.open("urls.txt", "w") do |file|
         file.write(urls.to_a.join("\n"))
     end
+    
+     File.open("/root/public/urls.txt", "w") do |file|
+        file.write(new_files.join("\n"))
+    end
 
 end
