@@ -4,12 +4,12 @@ module IPSW
 
         ENDPOINT = "https://api.ipsw.me/v4/devices"
 
-        attr_accessor :request, :only, :except
+        attr_accessor :request, :include, :exclude
 
-        def initialize(only: nil, except: nil)
+        def initialize(include: nil, exclude: nil)
             @request = HTTParty.get(ENDPOINT)
-            @only    = regexify(only)
-            @except  = regexify(except)
+            @include = regexify(include)
+            @exclude = regexify(exclude)
         end
 
         def list
@@ -27,7 +27,7 @@ module IPSW
         private
 
             def regexify(value)
-                value && Regexp.new(value.to_s.split(",").join("|").gsub(/\|\s/, "|"))
+                value && Regexp.new(value.join("|").gsub(/\|\s/, "|"))
             end
 
             def response
@@ -40,13 +40,13 @@ module IPSW
 
             def whitelisted_devices
                 response.select do |device|
-                    only ? only.match(device["name"]) : device
+                    include ? include.match(device["name"]) : device
                 end
             end
         
             def blacklisted_devices
                 response.select do |device|
-                    except && except.match(device["name"])
+                    exclude && exclude.match(device["name"])
                 end
             end
 
